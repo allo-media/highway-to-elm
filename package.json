@@ -1,0 +1,23 @@
+{
+  "name": "highway-to-elm",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/allo-media/highway-to-elm.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/allo-media/highway-to-elm/issues"
+  },
+  "homepage": "https://github.com/allo-media/highway-to-elm#readme",
+  "devDependencies": {
+    "express": "^4.16.2",
+    "node-elm-compiler": "^4.4.1"
+  }
+}
