@@ -28,7 +28,7 @@ app.post("/compile", (req, res) => {
       res.send(data.toString());
     })
     .catch(err => {
-      res.send(400, { error: "Invalid request: " + err.toString() });
+      res.status(400).send({ error: "Invalid request: " + err.toString() }); 
     });
 });
 
