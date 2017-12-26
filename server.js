@@ -11,10 +11,7 @@ const writeFile = promisify(fs.writeFile);
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
-
-app.get("/", (req, res) => {
-  res.sendFile(__dirname + "/public/home.html");
-});
+app.use("/", express.static('public'))
 
 app.post("/compile", (req, res) => {
   const { elm: elmCode } = req.body;
@@ -28,7 +25,7 @@ app.post("/compile", (req, res) => {
       res.send(data.toString());
     })
     .catch(err => {
-      res.status(400).send({ error: "Invalid request: " + err.toString() }); 
+      res.status(400).send({ error: "Invalid request: " + err.toString() });
     });
 });
 
