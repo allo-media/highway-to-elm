@@ -10,52 +10,24 @@
     <link rel="stylesheet" href="./codemirror.css">
     <link rel="stylesheet" href="./dracula.css">
     <title>Highway to Elm</title>
+    <script src="codemirror.js"></script>
+    <script src="codemirror-elm.js"></script>
 </head>
 
 <body>
 
-    <div id="topbar">
-        <img src="./img/logo.svg" alt="Logo">
-    </div>
-
-    <div class="content">
-        <div>
-            <p>
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolorum illum architecto distinctio doloribus sint accusantium
-                exercitationem, provident quasi autem alias totam. Nam officiis porro voluptates incidunt rem culpa a nobis,
-                id laboriosam cupiditate expedita sed laudantium iusto voluptate architecto laborum ducimus labore, nisi
-                est repellat esse reprehenderit. Architecto maiores nobis, nostrum tempora ratione exercitationem, animi
-                quidem eos adipisci asperiores non sint optio iure eum, unde minus debitis ex corporis doloribus error est
-                repellat laudantium dicta nesciunt. Neque enim impedit voluptas aliquam deserunt ullam, labore velit dolore
-                iure nobis reiciendis aspernatur voluptate dolorum optio similique quis obcaecati beatae quia, nostrum amet
-                laboriosam adipisci laborum quisquam. Pariatur possimus fugit aperiam vitae iure obcaecati fuga officia veritatis
-                quibusdam! Cupiditate voluptatibus at veniam enim amet dolor ab eligendi modi, animi rerum rem magnam porro
-                officia quam dolore quisquam unde libero provident illo hic excepturi maxime. Tenetur aspernatur quibusdam
-                nostrum delectus maxime corrupti officia quis dolor, quae magni. Dicta necessitatibus totam debitis autem
-                deserunt rerum, exercitationem ullam voluptates non?
-            </p>
-        </div>
-
-        <div id="exercice">
-            <form method="post" action="/compile" target="result">
-                <textarea id="elm" name="elm">module Main exposing (..)</textarea>
-                <button type="submit">
-                    <i class="icon-arrow-right"></i>
-                </button>
-            </form>
-            <iframe id="result" name="result"></iframe>
-        </div>
-    </div>
-
-    <script src="codemirror.js"></script>
-    <script src="codemirror-elm.js"></script>
+    <script src="app.js"></script>
     <script>
-        CodeMirror.fromTextArea(document.getElementById("elm"), {
-            indentUnit: 4,
-            indentWithTabs: false,
-            tabSize: 4,
-            lineNumbers: true,
-            theme: "dracula"
+        const app = Elm.Main.fullscreen();
+
+        app.ports.transformTextarea.subscribe(() => {
+          CodeMirror.fromTextArea(document.getElementById("elm"), {
+              indentUnit: 4,
+              indentWithTabs: false,
+              tabSize: 4,
+              lineNumbers: true,
+              theme: "dracula"
+          });
         });
     </script>
 </body>

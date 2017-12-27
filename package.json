@@ -4,11 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "sass-compile":
-      "node-sass-chokidar style/ -o public --output-style compressed --include-path node_modules/",
-    "sass-watch":
-      "node-sass-chokidar style/ -o public --output-style compressed --include-path node_modules/ -w",
-    "start": "node server.js",
+    "build": "npm run copy-assets && elm-make src/Main.elm --yes --output=build/app.js",
+    "copy-assets": "rimraf build && mkdir build && cp -r public/* build",
+    "debug": "elm-live src/Main.elm --warn --dir=public/ --output=public/app.js --debug",
+    "live": "elm-live src/Main.elm --warn --port=3000 --dir=public/ --output=public/app.js",
+    "optimize": "uglifyjs build/app.js -c -m -o build/app.js",
+    "sass-compile": "node-sass-chokidar style/ -o public --output-style compressed --include-path node_modules/",
+    "sass-watch": "node-sass-chokidar style/ -o public --output-style compressed --include-path node_modules/ -w",
+    "server": "node server.js",
+    "start": "run-p sass-watch server live",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -21,13 +25,18 @@
     "url": "https://github.com/allo-media/highway-to-elm/issues"
   },
   "homepage": "https://github.com/allo-media/highway-to-elm#readme",
-  "devDependencies": {},
+  "devDependencies": {
+    "npm-run-all": "^4.1.2"
+  },
   "dependencies": {
     "body-parser": "^1.18.2",
     "codemirror": "^5.33.0",
+    "elm": "^0.18.0",
+    "elm-live": "^2.7.5",
     "express": "^4.16.2",
     "node-elm-compiler": "^4.4.1",
     "node-sass-chokidar": "0.0.3",
-    "normalize-scss": "^7.0.0"
+    "normalize-scss": "^7.0.0",
+    "uglify-js": "^3.1.6"
   }
 }
