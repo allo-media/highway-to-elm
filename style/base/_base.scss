@@ -5,16 +5,28 @@
   box-sizing: border-box;
 }
 
+html,
+body {
+  min-height: 100%;
+  -webkit-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+}
+
 html {
   overflow: hidden;
-  font-size: 10px;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  font-size: 16px;
 }
 
 body {
-  background: #fff;
+  font-family: "Nunito", sans-serif;
+  background-color: $elm-dark-blue;
   height: 100vh;
-  font-size: 14px;
   line-height: 1.42857;
-  color: rgba(0, 0, 0, 0.6);
+  color: #fff;
+}
+
+.content {
+  max-width: 1100px;
+  margin: 0 auto;
 }

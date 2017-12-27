@@ -5,20 +5,47 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="./main.css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:300,300i,400,400i,700,700i" rel="stylesheet">
+    <link href="https://file.myfontastic.com/r97CfconCJmWJ88RVUhw4Z/icons.css" rel="stylesheet">
     <link rel="stylesheet" href="./codemirror.css">
+    <link rel="stylesheet" href="./dracula.css">
     <title>Highway to Elm</title>
 </head>
 
 <body>
 
-    <div id="exercice">
-        <form method="post" action="/compile" target="result">
-            <textarea id="elm" name="elm">module Main exposing (..)</textarea>
-            <button type="submit">Compile</button>
-        </form>
-        <iframe id="result" name="result"></iframe>
+    <div id="topbar">
+        <img src="./img/logo.svg" alt="Logo">
     </div>
 
+    <div class="content">
+        <div>
+            <p>
+                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolorum illum architecto distinctio doloribus sint accusantium
+                exercitationem, provident quasi autem alias totam. Nam officiis porro voluptates incidunt rem culpa a nobis,
+                id laboriosam cupiditate expedita sed laudantium iusto voluptate architecto laborum ducimus labore, nisi
+                est repellat esse reprehenderit. Architecto maiores nobis, nostrum tempora ratione exercitationem, animi
+                quidem eos adipisci asperiores non sint optio iure eum, unde minus debitis ex corporis doloribus error est
+                repellat laudantium dicta nesciunt. Neque enim impedit voluptas aliquam deserunt ullam, labore velit dolore
+                iure nobis reiciendis aspernatur voluptate dolorum optio similique quis obcaecati beatae quia, nostrum amet
+                laboriosam adipisci laborum quisquam. Pariatur possimus fugit aperiam vitae iure obcaecati fuga officia veritatis
+                quibusdam! Cupiditate voluptatibus at veniam enim amet dolor ab eligendi modi, animi rerum rem magnam porro
+                officia quam dolore quisquam unde libero provident illo hic excepturi maxime. Tenetur aspernatur quibusdam
+                nostrum delectus maxime corrupti officia quis dolor, quae magni. Dicta necessitatibus totam debitis autem
+                deserunt rerum, exercitationem ullam voluptates non?
+            </p>
+        </div>
+
+        <div id="exercice">
+            <form method="post" action="/compile" target="result">
+                <textarea id="elm" name="elm">module Main exposing (..)</textarea>
+                <button type="submit">
+                    <i class="icon-arrow-right"></i>
+                </button>
+            </form>
+            <iframe id="result" name="result"></iframe>
+        </div>
+    </div>
 
     <script src="codemirror.js"></script>
     <script src="codemirror-elm.js"></script>
@@ -27,7 +54,8 @@
             indentUnit: 4,
             indentWithTabs: false,
             tabSize: 4,
-            lineNumbers: true
+            lineNumbers: true,
+            theme: "dracula"
         });
     </script>
 </body>
