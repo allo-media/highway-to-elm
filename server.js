@@ -7,11 +7,47 @@ const express = require("express");
 const bodyParser = require("body-parser");
 
 const mkdtemp = promisify(fs.mkdtemp);
+const readdir = promisify(fs.readdir);
+const readFile = promisify(fs.readFile);
 const writeFile = promisify(fs.writeFile);
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use("/", express.static('public'))
+
+function extractExercise(filePath) {
+  return readFile("./exercises/" + filePath, "utf8")
+    .then(content => {
+      const [_, rawMeta, body] = content.split("---\n");
+      const meta = rawMeta
+        .split("\n")
+        .map(line => line.split(":").map(w => w.trim()))
+        .reduce((acc, entry) => {
+          const [key, value] = entry;
+          return {...acc, [key]: value};
+        }, {});
+      return {
+        title: meta.title,
+        description: meta.description,
+        body: body.trim(),
+      };
+    });
+}
+
+app.get("/exercises", (req, res) => {
+  readdir("./exercises")
+    .then((files) => {
+      // XXX: instead of reading on every request, we should rather read it on
+      // app startup and cache it. 
+      return Promise.all(files.map(extractExercise));
+    })
+    .then((exercises) => {
+      res.send(exercises);
+    })
+    .catch(err => {
+      res.status(500).send({ error: "Cannot retrieve exercises: " + err.message });
+    });
+});
 
 app.post("/compile", (req, res) => {
   const { elm: elmCode } = req.body;
@@ -45,4 +81,4 @@ startServer()
   })
   .catch(err => {
     console.error(err);
-  })
+  });
