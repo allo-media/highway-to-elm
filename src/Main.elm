@@ -3,14 +3,15 @@ module Main exposing (main)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Ports
+import Http
+import Json.Decode as Decode exposing (Decoder)
 
 
 -- import Html.Events exposing (..)
 
 
 type Msg
-    = NoOp
-    | Plop
+    = ListReceived (Result Http.Error (List Exercise))
 
 
 type alias Exercise =
@@ -25,14 +26,39 @@ type alias Model =
     }
 
 
+decodeExercise : Decoder Exercise
+decodeExercise =
+    Decode.map3 Exercise
+        (Decode.field "title" Decode.string)
+        (Decode.field "description" Decode.string)
+        (Decode.field "body" Decode.string)
+
+
+getExerciseList : Http.Request (List Exercise)
+getExerciseList =
+    Http.get "http://localhost:3000/exercises" (Decode.list decodeExercise)
+
+
 init : ( Model, Cmd Msg )
 init =
-    { exercises = [] } ! [ Ports.transformTextarea () ]
+    { exercises = [] }
+        ! [ Ports.transformTextarea ()
+          , Http.send ListReceived getExerciseList
+          ]
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
-    model ! []
+    case msg of
+        ListReceived (Ok exercises) ->
+            { model | exercises = exercises } ! []
+
+        ListReceived (Err error) ->
+            let
+                _ =
+                    Debug.log "Error" error
+            in
+                model ! []
 
 
 view : Model -> Html Msg
@@ -42,7 +68,7 @@ view model =
             [ img [ alt "Logo", src "./img/logo.svg" ] [] ]
         , div [ class "content" ]
             [ div []
-                [ p [] [ text "This is a description" ] ]
+                [ p [] [ text (toString model) ] ]
             , div [ id "exercice" ]
                 -- XXX: do not hardcode the server endpoint here
                 [ Html.form [ action "http://localhost:3000/compile", method "post", target "result" ]
