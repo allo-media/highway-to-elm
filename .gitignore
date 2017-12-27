@@ -3,3 +3,4 @@ repl-temp-*
 node_modules
 package-lock.json
 public/main.css
+public/app.js
