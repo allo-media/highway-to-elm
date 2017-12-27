@@ -1,0 +1,20 @@
+@import "./_variables";
+
+* {
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+html {
+  overflow: hidden;
+  font-size: 10px;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+body {
+  background: #fff;
+  height: 100vh;
+  font-size: 14px;
+  line-height: 1.42857;
+  color: rgba(0, 0, 0, 0.6);
+}

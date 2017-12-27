@@ -10,3 +10,17 @@ $ npm start
 ```
 
 Browse [http://localhost:3000](http://localhost:3000).
+
+## Run
+
+#### SCSS compilation
+
+```
+$ npm run sass-compile
+```
+
+#### SCSS watching
+
+```
+$ npm run sass-watch
+```

@@ -1,27 +1,35 @@
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Test</title>
+    <link rel="stylesheet" href="./main.css">
+    <link rel="stylesheet" href="./codemirror.css">
+    <title>Highway to Elm</title>
 </head>
+
 <body>
-    <form method="post" action="/compile" target="result">
-        <textarea id="elm" name="elm" rows="10" cols="60">module Main exposing (..)</textarea>
-        <br/>
-        <button type="submit">Compile</button>
-    </form>
-    <iframe id="result" name="result" width="800" height="500"></iframe>
+
+    <div id="exercice">
+        <form method="post" action="/compile" target="result">
+            <textarea id="elm" name="elm">module Main exposing (..)</textarea>
+            <button type="submit">Compile</button>
+        </form>
+        <iframe id="result" name="result"></iframe>
+    </div>
+
+
     <script src="codemirror.js"></script>
-    <link rel="stylesheet" href="codemirror.css">
     <script src="codemirror-elm.js"></script>
     <script>
-    CodeMirror.fromTextArea(document.getElementById("elm"), {
-        indentUnit: 4,
-        indentWithTabs: false,
-        tabSize: 4,
-        lineNumbers: true
-    });
+        CodeMirror.fromTextArea(document.getElementById("elm"), {
+            indentUnit: 4,
+            indentWithTabs: false,
+            tabSize: 4,
+            lineNumbers: true
+        });
     </script>
 </body>
+
 </html>
