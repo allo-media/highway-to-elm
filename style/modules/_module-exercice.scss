@@ -19,6 +19,7 @@
   iframe {
     width: 100%;
     height: $size;
+    background: #fff;
   }
 
   .CodeMirror {
@@ -26,7 +27,30 @@
     height: 100%;
   }
 
+  form {
+    position: relative;
+  }
+
   button {
+    $size: 50px;
     position: absolute;
+    left: 100%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background: $elm-green;
+    border: 0;
+    color: #fff;
+    text-align: center;
+    height: $size;
+    width: $size;
+    border-radius: $size;
+    font-size: 2rem;
+    margin-left: 5px;
+    cursor: pointer;
+    transition: transform ease 0.15s;
+
+    &:hover {
+      transform: translate(-50%, -50%) scale(1.2);
+    }
   }
 }
