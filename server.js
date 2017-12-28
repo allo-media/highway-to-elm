@@ -17,21 +17,22 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use("/", express.static("public"));
 app.use(cors());
 function extractExercise(filePath) {
-  return readFile("./exercises/" + filePath, "utf8").then(content => {
-    const [_, rawMeta, body] = content.split("---\n");
-    const meta = rawMeta
-      .split("\n")
-      .map(line => line.split(":").map(w => w.trim()))
-      .reduce((acc, entry) => {
-        const [key, value] = entry;
-        return { ...acc, [key]: value };
-      }, {});
-    return {
-      title: meta.title,
-      description: meta.description,
-      body: body.trim()
-    };
-  });
+  return readFile("./exercises/" + filePath, "utf8")
+    .then(content => {
+      const [_, rawMeta, body] = content.split("---\n");
+      const meta = rawMeta
+        .split("\n")
+        .map(line => line.split(":").map(w => w.trim()))
+        .reduce((acc, entry) => {
+          const [key, value] = entry;
+          return { ...acc, [key]: value };
+        }, {});
+      return {
+        title: meta.title,
+        description: meta.description,
+        body: body.trim()
+      };
+    });
 }
 
 app.get("/exercises", (req, res) => {
@@ -59,7 +60,7 @@ app.post("/compile", (req, res) => {
     .then(() => {
       return compileToString([sourceFile], { yes: true, output: "index.html" });
     })
-    .then(function(data) {
+    .then(function (data) {
       res.send(data.toString());
     })
     .catch(err => {
@@ -69,10 +70,11 @@ app.post("/compile", (req, res) => {
 
 function startServer() {
   return new Promise((resolve, reject) => {
-    mkdtemp(path.join(os.tmpdir(), "hte-")).then(folder => {
-      app.hteTmp = folder;
-      app.listen(3000, resolve);
-    });
+    mkdtemp(path.join(os.tmpdir(), "hte-"))
+      .then(folder => {
+        app.hteTmp = folder;
+        app.listen(3000, resolve);
+      });
   });
 }
 
