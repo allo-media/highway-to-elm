@@ -13,20 +13,19 @@ body {
 }
 
 html {
-  overflow: hidden;
+  // overflow: hidden;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   font-size: 16px;
 }
 
 body {
-  font-family: "Nunito", sans-serif;
+  font-family: 'Source Sans Pro', sans-serif;
   background-color: $elm-dark-blue;
   height: 100vh;
-  line-height: 1.42857;
+  line-height: 1.5;
   color: #fff;
 }
 
-.content {
-  max-width: 1100px;
-  margin: 0 auto;
+h1 {
+  font-weight: 100;
 }

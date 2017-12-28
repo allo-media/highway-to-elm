@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="./main.css">
-    <link href="https://fonts.googleapis.com/css?family=Nunito:300,300i,400,400i,700,700i" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,700,700i" rel="stylesheet">
     <link href="https://file.myfontastic.com/r97CfconCJmWJ88RVUhw4Z/icons.css" rel="stylesheet">
     <link rel="stylesheet" href="./codemirror.css">
     <link rel="stylesheet" href="./dracula.css">
@@ -21,13 +21,13 @@
         const app = Elm.Main.fullscreen();
 
         app.ports.transformTextarea.subscribe(() => {
-          CodeMirror.fromTextArea(document.getElementById("elm"), {
-              indentUnit: 4,
-              indentWithTabs: false,
-              tabSize: 4,
-              lineNumbers: true,
-              theme: "dracula"
-          });
+            CodeMirror.fromTextArea(document.getElementById("elm"), {
+                indentUnit: 4,
+                indentWithTabs: false,
+                tabSize: 4,
+                lineNumbers: true,
+                theme: "dracula"
+            });
         });
     </script>
 </body>

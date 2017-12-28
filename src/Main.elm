@@ -71,25 +71,28 @@ update msg model =
 
 view : Model -> Html Msg
 view model =
-    div []
-        [ div [ id "topbar" ]
+    div [ class "wrapper" ]
+        [ div [ class "topbar" ]
             [ img [ alt "Logo", src "./img/logo.svg" ] [] ]
         , div [ class "content" ]
-            [ div []
+            [ div [ class "list-exercise" ]
                 [ model.exercises
                     |> List.map
                         (\ex ->
-                            li []
-                                [ a [ href <| "#/exercise/" ++ toString ex.id ]
-                                    [ text ex.title ]
-                                , br [] []
-                                , text ex.description
-                                ]
+                            option []
+                                [ text ex.title ]
                         )
-                    |> ul []
+                    |> select []
                 ]
-            , div [ id "exercice" ]
-                [ Html.form
+            , div [ class "exercise" ]
+                [ div [ class "summary" ]
+                    [ div [ class "inner" ]
+                        [ h1 [] [ text "Solve Me" ]
+                        , text "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ac ex ac massa pharetra placerat et non eros. Integer accumsan, tortor eu tincidunt elementum, felis nibh mollis erat, eu suscipit erat quam ut nunc. Suspendisse ac eros orci. Proin commodo vitae nisl eu lacinia. Sed sagittis nisl ut enim semper, ac posuere quam tincidunt. Mauris dignissim dolor in fringilla tristique. Integer congue justo et enim malesuada, in maximus nibh commodo. Ut facilisis blandit elementum. Duis finibus dictum magna, faucibus finibus arcu tincidunt ac. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aliquam erat volutpat. Nam quis enim dignissim, auctor enim sit amet, fringilla diam. Nulla sagittis sed diam eu scelerisque. Praesent massa erat, tempor vel tempor vitae. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ac ex ac massa pharetra placerat et non eros. Integer accumsan, tortor eu tincidunt elementum, felis nibh mollis erat, eu suscipit erat quam ut nunc. Suspendisse ac eros orci. Proin commodo vitae nisl eu lacinia. Sed sagittis nisl ut enim semper, ac posuere quam tincidunt. Mauris dignissim dolor in fringilla tristique. Integer congue justo et enim malesuada, in maximus nibh commodo. Ut facilisis blandit elementum. Duis finibus dictum magna, faucibus finibus arcu tincidunt ac. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aliquam erat volutpat. Nam quis enim dignissim, auctor enim sit amet, fringilla diam. Nulla sagittis sed diam eu scelerisque. Praesent massa erat, tempor vel tempor vitae. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ac ex ac massa pharetra placerat et non eros. Integer accumsan, tortor eu tincidunt elementum, felis nibh mollis erat, eu suscipit erat quam ut nunc. Suspendisse ac eros orci. Proin commodo vitae nisl eu lacinia. Sed sagittis nisl ut enim semper, ac posuere quam tincidunt. Mauris dignissim dolor in fringilla tristique. Integer congue justo et enim malesuada, in maximus nibh commodo. Ut facilisis blandit elementum. Duis finibus dictum magna, faucibus finibus arcu tincidunt ac. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aliquam erat volutpat. Nam quis enim dignissim, auctor enim sit amet, fringilla diam. Nulla sagittis sed diam eu scelerisque. Praesent massa erat, tempor vel tempor vitae"
+                        ]
+                    , div [ class "panel-title" ] [ text "Summary" ]
+                    ]
+                , Html.form
                     [ action (server ++ "/compile")
                     , method "post"
                     , target "result"
@@ -98,8 +101,12 @@ view model =
                         [ text "module Main exposing (..)" ]
                     , button [ type_ "submit" ]
                         [ i [ class "icon-arrow-right" ] [] ]
+                    , div [ class "panel-title" ] [ text "Code" ]
                     ]
-                , iframe [ id "result", name "result" ] []
+                , div [ class "iframe-wrapper" ]
+                    [ iframe [ id "result", name "result" ] []
+                    , div [ class "panel-title" ] [ text "Result" ]
+                    ]
                 ]
             ]
         ]
