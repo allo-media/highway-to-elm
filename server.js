@@ -16,6 +16,7 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use("/", express.static("public"));
 app.use(cors());
+
 function extractExercise(filePath) {
   return readFile("./exercises/" + filePath, "utf8")
     .then(content => {
@@ -28,6 +29,7 @@ function extractExercise(filePath) {
           return { ...acc, [key]: value };
         }, {});
       return {
+        id: Number(filePath.split(".")[0]),
         title: meta.title,
         description: meta.description,
         body: body.trim()
