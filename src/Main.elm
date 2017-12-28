@@ -1,10 +1,20 @@
 module Main exposing (main)
 
+import Data.Exercise exposing (Exercise)
+import Data.Session exposing (Session)
 import Html exposing (..)
 import Html.Attributes exposing (..)
-import Ports
 import Http
 import Json.Decode as Decode exposing (Decoder)
+import Ports
+import View.Exercise as Exercise
+import View.Select as Select
+
+
+-- import Ports
+
+import View.Exercise as Exercise
+import View.Select as Select
 
 
 -- import Html.Events exposing (..)
@@ -12,25 +22,21 @@ import Json.Decode as Decode exposing (Decoder)
 
 type Msg
     = ListReceived (Result Http.Error (List Exercise))
-
-
-type alias Exercise =
-    { id : Int
-    , title : String
-    , description : String
-    , body : String
-    }
+    | SelectExercise Int
 
 
 type alias Model =
     { exercises : List Exercise
+    , current : Maybe Exercise
     }
 
 
-server : String
-server =
-    -- XXX: do not hardcode the server endpoint here
-    "http://localhost:3000"
+session : Session
+session =
+    { server =
+        -- XXX: do not hardcode the server endpoint here
+        "http://localhost:3000"
+    }
 
 
 decodeExercise : Decoder Exercise
@@ -42,16 +48,17 @@ decodeExercise =
         (Decode.field "body" Decode.string)
 
 
-getExerciseList : Http.Request (List Exercise)
-getExerciseList =
-    Http.get (server ++ "/exercises") (Decode.list decodeExercise)
+getExerciseList : Session -> Http.Request (List Exercise)
+getExerciseList session =
+    Http.get (session.server ++ "/exercises") (Decode.list decodeExercise)
 
 
 init : ( Model, Cmd Msg )
 init =
-    { exercises = [] }
-        ! [ Ports.transformTextarea ()
-          , Http.send ListReceived getExerciseList
+    { exercises = []
+    , current = Nothing
+    }
+        ! [ getExerciseList session |> Http.send ListReceived
           ]
 
 
@@ -68,6 +75,23 @@ update msg model =
             in
                 model ! []
 
+        SelectExercise id ->
+            let
+                match =
+                    List.filter (\x -> x.id == id) model.exercises
+                        |> List.head
+            in
+                case match of
+                    Just exercise ->
+                        { model | current = Just exercise }
+                            ! [ Ports.clearEditor ()
+                              , Ports.createEditor ()
+                              ]
+
+                    Nothing ->
+                        -- XXX: error?
+                        model ! []
+
 
 view : Model -> Html Msg
 view model =
@@ -75,39 +99,16 @@ view model =
         [ div [ class "topbar" ]
             [ img [ alt "Logo", src "./img/logo.svg" ] [] ]
         , div [ class "content" ]
-            [ div [ class "list-exercise" ]
-                [ model.exercises
-                    |> List.map
-                        (\ex ->
-                            option []
-                                [ text ex.title ]
-                        )
-                    |> select []
-                ]
-            , div [ class "exercise" ]
-                [ div [ class "summary" ]
-                    [ div [ class "inner" ]
-                        [ h1 [] [ text "Solve Me" ]
-                        , text "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ac ex ac massa pharetra placerat et non eros. Integer accumsan, tortor eu tincidunt elementum, felis nibh mollis erat, eu suscipit erat quam ut nunc. Suspendisse ac eros orci. Proin commodo vitae nisl eu lacinia. Sed sagittis nisl ut enim semper, ac posuere quam tincidunt. Mauris dignissim dolor in fringilla tristique. Integer congue justo et enim malesuada, in maximus nibh commodo. Ut facilisis blandit elementum. Duis finibus dictum magna, faucibus finibus arcu tincidunt ac. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aliquam erat volutpat. Nam quis enim dignissim, auctor enim sit amet, fringilla diam. Nulla sagittis sed diam eu scelerisque. Praesent massa erat, tempor vel tempor vitae. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ac ex ac massa pharetra placerat et non eros. Integer accumsan, tortor eu tincidunt elementum, felis nibh mollis erat, eu suscipit erat quam ut nunc. Suspendisse ac eros orci. Proin commodo vitae nisl eu lacinia. Sed sagittis nisl ut enim semper, ac posuere quam tincidunt. Mauris dignissim dolor in fringilla tristique. Integer congue justo et enim malesuada, in maximus nibh commodo. Ut facilisis blandit elementum. Duis finibus dictum magna, faucibus finibus arcu tincidunt ac. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aliquam erat volutpat. Nam quis enim dignissim, auctor enim sit amet, fringilla diam. Nulla sagittis sed diam eu scelerisque. Praesent massa erat, tempor vel tempor vitae. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ac ex ac massa pharetra placerat et non eros. Integer accumsan, tortor eu tincidunt elementum, felis nibh mollis erat, eu suscipit erat quam ut nunc. Suspendisse ac eros orci. Proin commodo vitae nisl eu lacinia. Sed sagittis nisl ut enim semper, ac posuere quam tincidunt. Mauris dignissim dolor in fringilla tristique. Integer congue justo et enim malesuada, in maximus nibh commodo. Ut facilisis blandit elementum. Duis finibus dictum magna, faucibus finibus arcu tincidunt ac. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aliquam erat volutpat. Nam quis enim dignissim, auctor enim sit amet, fringilla diam. Nulla sagittis sed diam eu scelerisque. Praesent massa erat, tempor vel tempor vitae"
-                        ]
-                    , div [ class "panel-title" ] [ text "Summary" ]
-                    ]
-                , Html.form
-                    [ action (server ++ "/compile")
-                    , method "post"
-                    , target "result"
-                    ]
-                    [ textarea [ id "elm", name "elm" ]
-                        [ text "module Main exposing (..)" ]
-                    , button [ type_ "submit" ]
-                        [ i [ class "icon-arrow-right" ] [] ]
-                    , div [ class "panel-title" ] [ text "Code" ]
-                    ]
-                , div [ class "iframe-wrapper" ]
-                    [ iframe [ id "result", name "result" ] []
-                    , div [ class "panel-title" ] [ text "Result" ]
-                    ]
-                ]
+            [ Select.view { onSelect = SelectExercise }
+                { exercises = model.exercises
+                , current = model.current
+                }
+            , case model.current of
+                Nothing ->
+                    p [] [ text "please pick and exercise." ]
+
+                Just exercise ->
+                    Exercise.view session exercise
             ]
         ]
 

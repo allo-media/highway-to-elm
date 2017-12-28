@@ -1,4 +1,7 @@
 port module Ports exposing (..)
 
 
-port transformTextarea : () -> Cmd msg
+port createEditor : () -> Cmd msg
+
+
+port clearEditor : () -> Cmd msg
