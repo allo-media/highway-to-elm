@@ -31,6 +31,7 @@
   "dependencies": {
     "body-parser": "^1.18.2",
     "codemirror": "^5.33.0",
+    "cors": "^2.8.4",
     "elm": "^0.18.0",
     "elm-live": "^2.7.5",
     "express": "^4.16.2",
