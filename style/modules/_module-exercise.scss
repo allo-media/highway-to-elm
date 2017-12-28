@@ -1,0 +1,121 @@
+@import "../base/_variables";
+
+.list-exercise {
+  // background: green;
+}
+
+.exercise {
+  display: grid;
+  grid-template-columns: 1fr 1.3fr 1.3fr;
+  padding: 20px;
+  padding-top: 40px;
+
+  // SCROLLBAR
+  ::-webkit-scrollbar {
+      width: 0.5em;
+  }
+  
+  ::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.15);
+      border-radius: 10px;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background-color: rgba(0,0,0, 0.2);
+    outline: 1px solid slategrey;
+    border-radius: 10px;
+  }
+
+  .panel-title {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: $elm-grey;
+    z-index: 9;
+    padding: 2px 25px;
+    border-radius: 50px;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    font-weight: bold;
+    white-space: nowrap;
+  }
+
+  summary,
+  iframe,
+  .CodeMirror {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  // SUMMARY
+
+  .summary {
+    background: rgba(40, 42, 54, 0.81);
+    position: relative;
+    border-radius: 4px 0 0 4px;
+    display: grid;
+    min-width: 350px;
+    // FIXME: BAAAAAAH 
+    grid-template-rows: 84vh;
+
+    > .inner {
+      overflow: auto;
+      padding: 25px 30px;
+    }
+  }
+
+  // CODE
+
+  .CodeMirror {
+    width: 100%;
+    height: 100%;
+    font-size: 13px;
+  }
+
+  .CodeMirror.cm-s-dracula {
+    padding-top: 20px;
+  }
+
+  form {
+    position: relative;
+    margin: 0;
+  }
+
+  button {
+    $size: 50px;
+    position: absolute;
+    left: 100%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background: $elm-green;
+    border: 0;
+    color: #fff;
+    text-align: center;
+    height: $size;
+    width: $size;
+    border-radius: $size;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: transform ease 0.15s;
+    z-index: 2;
+
+    &:hover {
+      transform: translate(-50%, -50%) scale(1.2);
+    }
+  }
+
+  // RESULT
+
+  .iframe-wrapper {
+    position: relative;
+
+    iframe {
+      width: 100%;
+      height: 100%;
+      background: #fff;
+      border-radius: 0 4px 4px 0;
+      padding: 20px;
+    }
+  }
+}

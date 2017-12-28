@@ -1,0 +1,13 @@
+@import "./_variables";
+
+.content {
+  height: 100%;
+  display: grid;
+  grid-template-rows: 20px 1fr;
+}
+
+.wrapper {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  height: 100%;
+}
