@@ -44,7 +44,7 @@ view config state =
                 [ text ex.title ]
     in
         div [ class "list-exercise" ]
-            [ state.exercises
+            [ ({ title = "-------", description = "", body = "", id = 0 } :: state.exercises)
                 |> List.map exerciseOption
                 |> select
                     [ on "change" (Decode.map config.onSelect decodeStringAsInt) ]

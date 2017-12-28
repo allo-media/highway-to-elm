@@ -6,7 +6,7 @@
 
 .exercise {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1.3fr 1.3fr;
   padding: 20px;
   padding-top: 40px;
 
@@ -24,21 +24,6 @@
     background-color: rgba(0,0,0, 0.2);
     outline: 1px solid slategrey;
     border-radius: 10px;
-  }
-
-
-  .summary {
-    background: rgba(40, 42, 54, 0.81);
-    position: relative;
-    border-radius: 4px 0 0 4px;
-    display: grid;
-    // FIXME: BAAAAAAH 
-    grid-template-rows: 84vh;
-
-    > .inner {
-      overflow: auto;
-      padding: 25px 30px;
-    }
   }
 
   .panel-title {
@@ -62,21 +47,29 @@
     border: 1px solid rgba(0, 0, 0, 0.1);
   }
 
-  .iframe-wrapper {
-    position: relative;
+  // SUMMARY
 
-    iframe {
-      width: 100%;
-      height: 100%;
-      background: #fff;
-      border-radius: 0 4px 4px 0;
-      padding: 20px;
+  .summary {
+    background: rgba(40, 42, 54, 0.81);
+    position: relative;
+    border-radius: 4px 0 0 4px;
+    display: grid;
+    min-width: 350px;
+    // FIXME: BAAAAAAH 
+    grid-template-rows: 84vh;
+
+    > .inner {
+      overflow: auto;
+      padding: 25px 30px;
     }
   }
+
+  // CODE
 
   .CodeMirror {
     width: 100%;
     height: 100%;
+    font-size: 14px;
   }
 
   .CodeMirror.cm-s-dracula {
@@ -101,14 +94,27 @@
     height: $size;
     width: $size;
     border-radius: $size;
-    font-size: 2rem;
-    margin-left: 5px;
+    font-size: 1.5rem;
     cursor: pointer;
     transition: transform ease 0.15s;
-    z-index: 1;
+    z-index: 2;
 
     &:hover {
       transform: translate(-50%, -50%) scale(1.2);
+    }
+  }
+
+  // RESULT
+
+  .iframe-wrapper {
+    position: relative;
+
+    iframe {
+      width: 100%;
+      height: 100%;
+      background: #fff;
+      border-radius: 0 4px 4px 0;
+      padding: 20px;
     }
   }
 }

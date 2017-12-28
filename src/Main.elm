@@ -89,8 +89,7 @@ update msg model =
                               ]
 
                     Nothing ->
-                        -- XXX: error?
-                        model ! []
+                        { model | current = Nothing } ! []
 
 
 view : Model -> Html Msg
