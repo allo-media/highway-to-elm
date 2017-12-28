@@ -10,11 +10,29 @@
   padding: 20px;
   padding-top: 40px;
 
+  // SCROLLBAR
+  ::-webkit-scrollbar {
+      width: 0.5em;
+  }
+  
+  ::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.15);
+      border-radius: 10px;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background-color: rgba(0,0,0, 0.2);
+    outline: 1px solid slategrey;
+    border-radius: 10px;
+  }
+
+
   .summary {
     background: rgba(40, 42, 54, 0.81);
     position: relative;
     border-radius: 4px 0 0 4px;
     display: grid;
+    // FIXME: BAAAAAAH 
     grid-template-rows: 85.7vh;
 
     > .inner {
