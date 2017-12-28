@@ -94,11 +94,10 @@
     height: $size;
     width: $size;
     border-radius: $size;
-    font-size: 2rem;
-    margin-left: 5px;
+    font-size: 1.5rem;
     cursor: pointer;
     transition: transform ease 0.15s;
-    z-index: 1;
+    z-index: 2;
 
     &:hover {
       transform: translate(-50%, -50%) scale(1.2);
