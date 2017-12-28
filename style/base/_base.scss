@@ -22,12 +22,27 @@ body {
   font-family: 'Source Sans Pro', sans-serif;
   background-color: $elm-dark-blue;
   height: 100vh;
-  line-height: 1.5;
-  color: #fff;
+  line-height: 1.4;
+  color: rgba(255,255,255,.8);
 }
 
 h1 {
   font-weight: 100;
+  color: #fff;
+}
+
+strong,
+b {
+  color: #fff;
+  font-weight: bold;
+}
+
+code {
+  font-size: 14px;
+  background: rgba(0, 0, 0, 0.2);
+  display: block;
+  padding: 10px 15px;
+  border-radius: 4px;
 }
 
 
