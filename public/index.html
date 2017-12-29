@@ -30,6 +30,12 @@
           theme: "dracula",
           lineWrapping: true
         });
+        editor.setOption("extraKeys", {
+          Tab: function(cm) {
+            var spaces = Array(editor.getOption("indentUnit") + 1).join(" ");
+            editor.replaceSelection(spaces);
+          }
+        });
       });
     });
 

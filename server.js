@@ -19,22 +19,6 @@ app.use(cors());
 
 let exercises;
 
-/**
-TODO:
-- the exercises folder should actually contain folders, one per exercise, with:
-  * a README.md file for the pitch
-  * A Test.elm file containing test code.
-  * optionaly, a solution (a sample Main.elm file)
-- on first user request, store a cookie, generate a tmp user session dir
-- the run endpoint should accept elm code wit tests + implementation
-  * maybe two, tests + impl.
-- the script should create the file(s) in the user session directory from the
-  submitted code contents
-- the script should run the tests against these file(s)
-- the result should be parsed and exposed as the http response
-  * check https://github.com/rtfeldman/node-test-runner#--report
-*/
-
 function extractExercise(id) {
   const folder = `./exercises/${id}`;
   let record = {};
@@ -77,13 +61,14 @@ app.post("/compile", (req, res) => {
       return writeFile(sourceFile, elmCode);
     })
     .then(() => {
-      return compileToString([sourceFile], { yes: true, output: "index.html" });
+      return compileToString([sourceFile], { yes: true, output: "app.js" });
     })
     .then(data => {
-      res.send(data.toString());
+      const jsCode = data.toString();
+      res.send(`<html><body><script>${jsCode}</script><script>Elm.Main.fullscreen()</script></body></html>`);
     })
     .catch(err => {
-      res.status(400).send({ error: "Invalid request: " + err.toString() });
+      res.status(400).send(`<html><body><pre>${err.toString()}</pre></body></html>`);
     })
     .then(() => {
       // Remove the tmp directory
