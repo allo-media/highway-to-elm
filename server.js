@@ -17,6 +17,22 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use("/", express.static("public"));
 app.use(cors());
 
+/**
+TODO:
+- the exercises folder should actually contain folders, one per exercise, with:
+  * a README.md file for the pitch
+  * A Test.elm file containing test code.
+  * optionaly, a solution (a sample Main.elm file)
+- on first user request, store a cookie, generate a tmp user session dir
+- the run endpoint should accept elm code wit tests + implementation
+  * maybe two, tests + impl.
+- the script should create the file(s) in the user session directory from the
+  submitted code contents
+- the script should run the tests against these file(s)
+- the result should be parsed and exposed as the http response
+  * check https://github.com/rtfeldman/node-test-runner#--report
+*/
+
 function extractExercise(filePath) {
   return readFile("./exercises/" + filePath, "utf8")
     .then(content => {
