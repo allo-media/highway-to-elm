@@ -1,9 +1,5 @@
 @import "../base/_variables";
 
-.list-exercise {
-  display: inline-block;
-}
-
 .exercise {
   display: grid;
   grid-template-columns: 1fr 1.3fr 1fr;
@@ -22,10 +18,8 @@
   }
 
   .panel-title {
-    position: absolute;
+    @include centered-horizontaly;
     top: 15px;
-    left: 50%;
-    transform: translateX(-50%);
     background: $elm-grey;
     z-index: 9;
     padding: 2px 25px;
@@ -37,9 +31,7 @@
     white-space: nowrap;
   }
 
-  summary,
-  iframe,
-  .CodeMirror {
+  iframe {
     border: 1px solid rgba(0, 0, 0, 0.1);
   }
 
@@ -52,14 +44,10 @@
     grid-template-rows: 1fr;
 
     > .inner {
+      @include full-size;
       overflow: auto;
       padding: 25px 30px;
       padding-top: 30px;
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      left: 0;
-      right: 0;
     }
   }
 
@@ -68,38 +56,46 @@
   .code {
     display: grid;
     grid-template-rows: 1fr 1fr;
-
-    > div {
-      overflow: auto;
-    }
-
-    .code-panel {
-      border-bottom: 1px solid rgba(0,0,0,0.5);
-    }
-  }
-
-  .CodeMirror {
-    height: 100%;
-    font-size: 13px;
-    position: absolute;
-    bottom: 0;
-    top: 0;
-    left: 0;
-    right: 0;
-  }
-
- .CodeMirror-scroll{
-    top: 80px;
-}
-
-  form {
-    position: relative;
-    margin: 0;
     border: 1px solid rgba(0,0,0,0.5);
     border-top: 0;
     border-bottom: 0;
-    
+
+    > div {
+      position: relative;
+      overflow: auto;
+    }
+
+    // CODE PANEL
+    .code-panel {
+      border-bottom: 1px solid rgba(0,0,0,0.5);
+
+      form {
+        @include full-size;
+        margin: 0;
+      }
+    }
+
+    .CodeMirror {
+      height: 100%;
+      font-size: 13px;
+    }
+
+    .CodeMirror-scroll {
+      top: 80px;
+    }
+
+    // TESTS PANEL
+    .tests-panel {
+      pre {
+        @include full-size;
+        padding-top: 60px;
+        margin: 0;
+        background: none;
+        white-space: pre-wrap;
+      }
+    }
   }
+
 
   button {
     $size: 30px;
@@ -126,6 +122,22 @@
 
   // RESULT
 
+  .iframe-wrapper {
+    position: relative;
+    background: rgb(33, 35, 45);
+
+    iframe {
+      width: 100%;
+      height: 100%;
+      padding: 25px 30px;
+      padding-top: 70px;
+      
+      body {
+        color: #fff;
+      }
+    }
+  }
+  /*
   .tests {
     background: rgb(33, 35, 45);
     position: relative;
@@ -252,5 +264,5 @@
       border-radius: 0 4px 4px 0;
       padding: 20px;
     }
-  }
+  }*/
 }

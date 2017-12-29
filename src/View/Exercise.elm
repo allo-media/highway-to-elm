@@ -18,19 +18,23 @@ view session exercise =
                 ]
             ]
         , div [ class "code" ]
-            [ Html.form
-                [ action (session.server ++ "/compile")
-                , method "post"
-                , target "result"
-                , class "code-panel"
+            [ div [ class "code-panel" ]
+                [ Html.form
+                    [ action (session.server ++ "/compile")
+                    , method "post"
+                    , target "result"
+                    ]
+                    [ div [ class "panel-title" ] [ text "Code" ]
+                    , textarea [ id "elm", name "elm", value exercise.main ]
+                        [ text exercise.main ]
+                    , button [ type_ "submit" ]
+                        [ i [ class "icon-arrow-right" ] [] ]
+                    ]
                 ]
-                [ div [ class "panel-title" ] [ text "Code" ]
-                , textarea [ id "elm", name "elm", value exercise.main ]
-                    [ text exercise.main ]
-                , button [ type_ "submit" ]
-                    [ i [ class "icon-arrow-right" ] [] ]
+            , div [ class "tests-panel" ]
+                [ div [ class "panel-title" ] [ text "Tests" ]
+                , pre [] [ text "-- tests here" ]
                 ]
-            , pre [] [ text "-- tests here" ]
             ]
         , div [ class "iframe-wrapper" ]
             [ iframe [ id "result", name "result" ] []

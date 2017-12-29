@@ -4,3 +4,32 @@ $elm-dark-blue: #34495e;
 $elm-orange: #f0ad03;
 $elm-grey: #5a6377;
 $elm-green: #7ed13b;
+
+// MIXINS
+
+@mixin full-size() {
+    position: absolute;
+    bottom: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+
+@mixin centered-horizontaly() {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+@mixin centered-verticaly() {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+@mixin centered() {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
