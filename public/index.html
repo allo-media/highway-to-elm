@@ -33,6 +33,19 @@
       });
     });
 
+    app.ports.createEditor.subscribe(() => {
+      requestAnimationFrame(() => {
+        editor = CodeMirror.fromTextArea(document.getElementById("tests"), {
+          indentUnit: 4,
+          indentWithTabs: false,
+          tabSize: 4,
+          lineNumbers: true,
+          theme: "dracula",
+          lineWrapping: true
+        });
+      });
+    });
+
     app.ports.clearEditor.subscribe(() => {
       if (editor) {
         editor.toTextArea();

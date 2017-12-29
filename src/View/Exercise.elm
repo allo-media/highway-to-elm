@@ -39,16 +39,28 @@ view session exercise =
                     , Markdown.toHtml [] exercise.body
                     ]
                 ]
-            , Html.form
-                [ action (session.server ++ "/compile")
-                , method "post"
-                , target "result"
-                ]
-                [ div [ class "panel-title" ] [ text "Code" ]
-                , textarea [ id "elm", name "elm", value code ]
-                    [ text code ]
-                , button [ type_ "submit" ]
-                    [ i [ class "icon-arrow-right" ] [] ]
+            , div [ class "code" ]
+                [ Html.form
+                    [ action (session.server ++ "/compile")
+                    , method "post"
+                    , target "result"
+                    , class "code-panel"
+                    ]
+                    [ div [ class "panel-title" ] [ text "Code" ]
+                    , textarea [ id "elm", name "elm", value code ]
+                        [ text code ]
+                    , button [ type_ "submit" ]
+                        [ i [ class "icon-arrow-right" ] [] ]
+                    ]
+                , Html.form
+                    [ action (session.server ++ "/compile")
+                    , method "post"
+                    , target "result"
+                    ]
+                    [ div [ class "panel-title" ] [ text "tests" ]
+                    , textarea [ id "tests", name "tests", value code ]
+                        [ text code ]
+                    ]
                 ]
             , div [ class "tests" ]
                 [ div [ class "panel-title" ]
