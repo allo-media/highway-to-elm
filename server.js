@@ -17,6 +17,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use("/", express.static("public"));
 app.use(cors());
 
+let exercises;
+
 /**
 TODO:
 - the exercises folder should actually contain folders, one per exercise, with:
@@ -62,46 +64,46 @@ function extractExercise(id) {
 }
 
 app.get("/exercises", (req, res) => {
-  readdir("./exercises")
-    .then(files => {
-      // XXX: instead of reading on every request, we should rather read it on
-      // app startup and cache it.
-      return Promise.all(files.map(extractExercise));
-    })
-    .then(exercises => {
-      res.send(exercises);
-    })
-    .catch(err => {
-      res
-        .status(500)
-        .send({ error: "Cannot retrieve exercises: " + err.message });
-    });
+  res.send(exercises);
 });
 
 app.post("/compile", (req, res) => {
   const { elm: elmCode } = req.body;
-  // FIXME: we should have a dedicated tmp dir per user session
-  const sourceFile = app.hteTmp + "/Main.elm";
-  writeFile(sourceFile, elmCode)
+  let sourceFile;
+  // Create a temporary directory for the lifepan of this request
+  mkdtemp(path.join(os.tmpdir(), "hte-"))
+    .then(folder => {
+      sourceFile = `${folder}/Main.elm`;
+      return writeFile(sourceFile, elmCode);
+    })
     .then(() => {
       return compileToString([sourceFile], { yes: true, output: "index.html" });
     })
-    .then(function (data) {
+    .then(data => {
       res.send(data.toString());
     })
     .catch(err => {
       res.status(400).send({ error: "Invalid request: " + err.toString() });
+    })
+    .then(() => {
+      // Remove the tmp directory
+      // TODO
     });
 });
 
 function startServer() {
-  return new Promise((resolve, reject) => {
-    mkdtemp(path.join(os.tmpdir(), "hte-"))
-      .then(folder => {
-        app.hteTmp = folder;
+  return readdir("./exercises")
+    .then(files => {
+      return Promise.all(files.map(extractExercise));
+    })
+    .then(results => {
+      // Store the exercises in memory
+      exercises = results;
+      // Run ther server
+      return new Promise(resolve => {
         app.listen(3000, resolve);
       });
-  });
+    });
 }
 
 startServer()
