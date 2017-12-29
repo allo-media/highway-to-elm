@@ -18,6 +18,16 @@ type alias State =
     }
 
 
+selector : Exercise
+selector =
+    { title = "-------"
+    , description = ""
+    , body = ""
+    , id = 0
+    , main = ""
+    }
+
+
 decodeStringAsInt : Decoder Int
 decodeStringAsInt =
     let
@@ -44,7 +54,7 @@ view config state =
                 [ text ex.title ]
     in
         div [ class "list-exercise" ]
-            [ ({ title = "-------", description = "", body = "", id = 0 } :: state.exercises)
+            [ (selector :: state.exercises)
                 |> List.map exerciseOption
                 |> select
                     [ on "change" (Decode.map config.onSelect decodeStringAsInt) ]

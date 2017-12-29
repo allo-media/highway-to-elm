@@ -20,7 +20,8 @@ html {
 
 body {
   font-family: 'Source Sans Pro', sans-serif;
-  background-color: $elm-dark-blue;
+  background-color: $elm-dark-blue;    
+  background-color: #282a36;
   height: 100vh;
   line-height: 1.4;
   color: rgba(255,255,255,.8);
@@ -43,6 +44,11 @@ pre {
   display: block;
   padding: 10px 15px;
   border-radius: 4px;
+}
+
+i {
+  line-height: 0;
+  vertical-align: middle;
 }
 
 

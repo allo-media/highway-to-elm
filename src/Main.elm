@@ -1,6 +1,6 @@
 module Main exposing (main)
 
-import Data.Exercise exposing (Exercise)
+import Data.Exercise exposing (Exercise, decodeExercise)
 import Data.Session exposing (Session)
 import Html exposing (..)
 import Html.Attributes exposing (..)
@@ -37,15 +37,6 @@ session =
         -- XXX: do not hardcode the server endpoint here
         "http://localhost:3000"
     }
-
-
-decodeExercise : Decoder Exercise
-decodeExercise =
-    Decode.map4 Exercise
-        (Decode.field "id" Decode.int)
-        (Decode.field "title" Decode.string)
-        (Decode.field "description" Decode.string)
-        (Decode.field "body" Decode.string)
 
 
 getExerciseList : Session -> Http.Request (List Exercise)
@@ -96,13 +87,14 @@ view : Model -> Html Msg
 view model =
     div [ class "wrapper" ]
         [ div [ class "topbar" ]
-            [ img [ alt "Logo", src "./img/logo.svg" ] [] ]
-        , div [ class "content" ]
-            [ Select.view { onSelect = SelectExercise }
+            [ img [ alt "Logo", src "./img/logo.svg" ] []
+            , Select.view { onSelect = SelectExercise }
                 { exercises = model.exercises
                 , current = model.current
                 }
-            , case model.current of
+            ]
+        , div [ class "content" ]
+            [ case model.current of
                 Nothing ->
                     p [] [ text "please pick and exercise." ]
 
