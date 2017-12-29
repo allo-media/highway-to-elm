@@ -52,7 +52,7 @@
   // SUMMARY
 
   .summary {
-    background: rgba(40, 42, 54, 0.81);
+    background: rgb(33, 35, 45);
     position: relative;
     border-radius: 4px 0 0 4px;
     display: grid;
@@ -113,7 +113,7 @@
   // RESULT
 
   .tests {
-    background: rgba(40, 42, 54, 0.81);
+    background: rgb(33, 35, 45);
     position: relative;
     border-radius: 0 4px 4px 0;
 
@@ -124,7 +124,6 @@
     }
 
     .test-summary {
-      // background: red;
       display: grid;
       grid-auto-flow: column;
       text-align: center;
