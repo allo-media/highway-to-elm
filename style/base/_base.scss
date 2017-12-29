@@ -10,10 +10,10 @@ body {
   min-height: 100%;
   -webkit-text-size-adjust: 100%;
   -webkit-font-smoothing: antialiased;
+  text-decoration-skip: ink;
 }
 
 html {
-  // overflow: hidden;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   font-size: 16px;
 }
@@ -30,6 +30,14 @@ body {
 h1 {
   font-weight: 100;
   color: #fff;
+}
+
+a {
+  color: $elm-blue;
+
+  &:hover {
+    color: lighten($elm-blue, 20);
+  }
 }
 
 strong,
