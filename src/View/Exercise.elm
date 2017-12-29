@@ -37,7 +37,7 @@ view session exercise =
                 ]
             ]
         , div [ class "iframe-wrapper" ]
-            [ iframe [ id "result", name "result" ] []
+            [ iframe [ id "result", name "result", src "about:blank" ] []
             , div [ class "panel-title" ] [ text "Result" ]
             ]
         ]

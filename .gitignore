@@ -1,6 +1,6 @@
-elm-stuff
+/elm-stuff
 repl-temp-*
-node_modules
+/node_modules
 package-lock.json
 public/main.css
 public/app.js
