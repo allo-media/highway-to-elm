@@ -34,6 +34,7 @@
     "cors": "^2.8.4",
     "elm": "^0.18.0",
     "elm-live": "^2.7.5",
+    "elm-test": "^0.18.12",
     "express": "^4.16.2",
     "node-elm-compiler": "^4.4.1",
     "node-sass-chokidar": "0.0.3",
