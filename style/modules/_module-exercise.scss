@@ -2,13 +2,14 @@
 
 .list-exercise {
   // background: green;
+  display: inline-block;
 }
 
 .exercise {
   display: grid;
-  grid-template-columns: 1fr 1.3fr 1.3fr;
-  padding: 20px;
-  padding-top: 40px;
+  grid-template-columns: 1fr 1.3fr 1fr;
+  // padding: 20px;
+  // padding-top: 40px;
 
   // SCROLLBAR
   ::-webkit-scrollbar {
@@ -28,9 +29,9 @@
 
   .panel-title {
     position: absolute;
-    top: 0;
+    top: 15px;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translateX(-50%);
     background: $elm-grey;
     z-index: 9;
     padding: 2px 25px;
@@ -62,6 +63,7 @@
     > .inner {
       overflow: auto;
       padding: 25px 30px;
+      padding-top: 30px;
     }
   }
 
@@ -74,12 +76,15 @@
   }
 
   .CodeMirror.cm-s-dracula {
-    padding-top: 20px;
+    padding-top: 60px;
   }
 
   form {
     position: relative;
     margin: 0;
+    border: 1px solid rgba(0,0,0,0.5);
+    border-top: 0;
+    border-bottom: 0;
   }
 
   button {
@@ -106,6 +111,123 @@
   }
 
   // RESULT
+
+  .tests {
+    background: rgba(40, 42, 54, 0.81);
+    position: relative;
+    border-radius: 0 4px 4px 0;
+
+    > .inner {
+      overflow: auto;
+      padding: 25px 30px;
+      padding-top: 70px;
+    }
+
+    .test-summary {
+      // background: red;
+      display: grid;
+      grid-auto-flow: column;
+      text-align: center;
+      margin-bottom: 20px;
+
+      > div {
+        $radius: 30px;
+        padding: 15px;
+
+        &:first-of-type {
+          border-radius: 0 30px 30px 0;;
+          border: 1px solid rgba(0, 35, 5, 0.98);
+          border-radius: $radius 0 0 $radius;
+          background-color: rgba(139, 195, 74, 0.46);
+        }
+        &:last-of-type {
+          background: rgba(171, 0, 0, 0.18);
+          border-radius: 30px 0 0 30px;
+          border: 1px solid rgba(0, 35, 5, 0.98);
+          border-radius: 0 $radius $radius 0; 
+        }
+      }
+    }
+
+    .test {
+      padding: 30px 35px;
+      background: rgba(0, 0, 0, 0.15);
+      margin-bottom: 15px;
+      border-radius: 4px;
+      position: relative;
+
+      > div {
+        > div {
+          margin-bottom: 15px;
+
+          &:last-of-type() {
+            margin-bottom: 0;
+          }
+        }
+      }
+
+      &::before {
+        width: 5px;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        content: '';
+        border-radius: 4px 0 0 4px;
+      }
+
+      &.failed {
+        &::before {
+          background: red;
+        }
+      }
+
+      &.passed {
+        &::before {
+          background: green;
+        }
+      }
+
+      h2 {
+        margin: 0;
+        font-weight: 100;
+        font-size: 1.2rem;
+        margin-bottom: 15px;
+        color: #fff;
+      }
+
+      .result-title {
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-size: 0.8rem;
+        background: rgba(0, 0, 0, 0.15);
+        display: inline-block;
+        padding: 5px 15px 2px 15px;
+        font-weight: 600;
+        border-top-right-radius: 10px;
+        color: #5a6376;
+      }
+
+      pre {
+        margin: 0;
+        border-top-left-radius: 0;
+      }
+
+      // i {
+      //   font-size: 1.7rem;
+      //   position: relative;
+      //   top: 10px;
+      // }
+
+      // .icon-check-square {
+      //   color: $elm-green;
+      // }
+
+      // .icon-square {
+      //   color: red;
+      // }
+    }
+  }
 
   .iframe-wrapper {
     position: relative;

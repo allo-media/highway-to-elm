@@ -4,6 +4,10 @@
   background: $elm-blue;
   padding: 15px;
   text-align: center;
+  display: grid;
+  grid-auto-flow: column;
+  align-content: center;
+  justify-content: center;
 
   img {
     height: 30px;

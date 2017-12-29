@@ -96,13 +96,14 @@ view : Model -> Html Msg
 view model =
     div [ class "wrapper" ]
         [ div [ class "topbar" ]
-            [ img [ alt "Logo", src "./img/logo.svg" ] [] ]
-        , div [ class "content" ]
-            [ Select.view { onSelect = SelectExercise }
+            [ img [ alt "Logo", src "./img/logo.svg" ] []
+            , Select.view { onSelect = SelectExercise }
                 { exercises = model.exercises
                 , current = model.current
                 }
-            , case model.current of
+            ]
+        , div [ class "content" ]
+            [ case model.current of
                 Nothing ->
                     p [] [ text "please pick and exercise." ]
 
