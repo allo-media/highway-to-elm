@@ -33,10 +33,12 @@ TODO:
   * check https://github.com/rtfeldman/node-test-runner#--report
 */
 
-function extractExercise(filePath) {
-  return readFile("./exercises/" + filePath, "utf8")
-    .then(content => {
-      const [_, rawMeta, body] = content.split("---\n");
+function extractExercise(id) {
+  const folder = `./exercises/${id}`;
+  let record = {};
+  return readFile(`${folder}/README.md`, "utf8")
+    .then(readme => {
+      const [_, rawMeta, body] = readme.split("---\n");
       const meta = rawMeta
         .split("\n")
         .map(line => line.split(":").map(w => w.trim()))
@@ -44,12 +46,18 @@ function extractExercise(filePath) {
           const [key, value] = entry;
           return { ...acc, [key]: value };
         }, {});
-      return {
-        id: Number(filePath.split(".")[0]),
+      record = {
+        id: parseInt(id, 10),
         title: meta.title,
         description: meta.description,
         body: body.trim()
       };
+      return readFile(`${folder}/Main.elm`, "utf8");
+    })
+    .then(main => {
+      record.main = main;
+      // TODO: test file contents
+      return record;
     });
 }
 
