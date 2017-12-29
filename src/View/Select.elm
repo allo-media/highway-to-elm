@@ -25,6 +25,7 @@ selector =
     , body = ""
     , id = 0
     , main = ""
+    , test = ""
     }
 
 

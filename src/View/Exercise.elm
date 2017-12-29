@@ -20,20 +20,21 @@ view session exercise =
         , div [ class "code" ]
             [ div [ class "code-panel" ]
                 [ Html.form
-                    [ action (session.server ++ "/compile")
+                    [ action (session.server ++ "/run")
                     , method "post"
                     , target "result"
                     ]
                     [ div [ class "panel-title" ] [ text "Code" ]
                     , textarea [ id "elm", name "elm", value exercise.main ]
                         [ text exercise.main ]
+                    , input [ type_ "hidden", name "id", value <| toString exercise.id ] []
                     , button [ type_ "submit" ]
                         [ i [ class "icon-arrow-right" ] [] ]
                     ]
                 ]
             , div [ class "tests-panel" ]
                 [ div [ class "panel-title" ] [ text "Tests" ]
-                , pre [] [ text "-- tests here" ]
+                , pre [] [ text exercise.test ]
                 ]
             ]
         , div [ class "iframe-wrapper" ]

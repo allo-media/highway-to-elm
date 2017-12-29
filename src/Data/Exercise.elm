@@ -9,14 +9,16 @@ type alias Exercise =
     , description : String
     , body : String
     , main : String
+    , test : String
     }
 
 
 decodeExercise : Decoder Exercise
 decodeExercise =
-    Decode.map5 Exercise
+    Decode.map6 Exercise
         (Decode.field "id" Decode.int)
         (Decode.field "title" Decode.string)
         (Decode.field "description" Decode.string)
         (Decode.field "body" Decode.string)
         (Decode.field "main" Decode.string)
+        (Decode.field "test" Decode.string)

@@ -24,4 +24,4 @@ function parse(report) {
     }, {tests: []})
 }
 
-module.exports = parse;
+module.exports = { parse };

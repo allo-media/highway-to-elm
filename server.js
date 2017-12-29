@@ -6,11 +6,14 @@ const { compileToString } = require("node-elm-compiler");
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const child_process = require("child_process");
+const parser = require("./parser");
 
 const mkdtemp = promisify(fs.mkdtemp);
 const readdir = promisify(fs.readdir);
 const readFile = promisify(fs.readFile);
 const writeFile = promisify(fs.writeFile);
+const exec = promisify(child_process.exec);
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -42,13 +45,50 @@ function extractExercise(id) {
     })
     .then(main => {
       record.main = main;
-      // TODO: test file contents
+      return readFile(`${folder}/Test.elm`, "utf8");
+    })
+    .then(test => {
+      record.test = test;
       return record;
     });
 }
 
 app.get("/exercises", (req, res) => {
   res.send(exercises);
+});
+
+app.post("/run", (req, res) => {
+  const { elm: elmCode, id } = req.body;
+  let targetFilePath;
+  let baseFolder;
+  let exPath = __dirname + "/exercises/" + id;
+  // Create a temporary directory for the lifepan of this request
+  mkdtemp(path.join(os.tmpdir(), "hte-"))
+    .then(tmpFolder => {
+      // copy the test template
+      baseFolder = tmpFolder;
+      return exec(`cp -r ${__dirname}/template/* ${tmpFolder}`);
+    })
+    .then(() => {
+      targetFilePath = `${baseFolder}/Main.elm`;
+      return writeFile(targetFilePath, elmCode);
+    })
+    .then(() => {
+      return exec(`cp ${exPath}/Test.elm ${baseFolder}/tests/Test.elm`);
+    })
+    .then(() => {
+      return exec(`elm-test ${baseFolder} --report=json`);
+    })
+    .then((err, stdout, stderr) => {
+      return parser.parse(stdout);
+    })
+    .catch(err => {
+      res.status(400).send({ error: err.toString() });
+    })
+    .then(() => {
+      // Remove the tmp directory
+      // TODO
+    });
 });
 
 app.post("/compile", (req, res) => {
