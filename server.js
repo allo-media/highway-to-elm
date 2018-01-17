@@ -67,7 +67,7 @@ app.post("/run", (req, res) => {
     .then(tmpFolder => {
       // copy the test template
       baseFolder = tmpFolder;
-      return exec(`cp -r ${__dirname}/template/* ${tmpFolder}`);
+      return exec(`tar -xvzf template.tar.gz -C ${tmpFolder} --strip-components=1`);
     })
     .then(() => {
       targetFilePath = `${baseFolder}/Main.elm`;
